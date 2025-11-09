@@ -17,4 +17,4 @@ spec:
       queueName: keda-queue
       mode: QueueLength
       value: "5"
-      host: "amqp://rabbitmq:rabbitmq@172.19.169.56:32662/"
+      host: "amqp://rabbitmq:rabbitmq@CLUSTER_IP:32662/"
