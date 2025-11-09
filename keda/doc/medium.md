@@ -4,11 +4,11 @@
 
 Se você trabalha com Kubernetes, provavelmente já se viu em uma situação incômoda: seu aplicativo está processando filas, respondendo a webhooks ou lidando com picos de tráfego, e o Horizontal Pod Autoscaler (HPA) nativo fica preso olhando só para CPU e memória. Resultado? Pods que não escalam quando deveriam ou que escalam no tempo errado.
 
-Eu passei por isso mais vezes do que gostaria de admitir. Até descobrir que o KEDA resolve esse problema de um jeito bem elegante.
+Eu passei por isso mais vezes do que gostaria de admitir. Até descobrir que o KEDA resolve esse problema de um jeito bem elegante (e open source).
 
 > **Código completo deste artigo:** https://github.com/robertasolimandonofreo/medium-projects/tree/main/keda
 
-Todos os exemplos práticos que vou mostrar estão nesse repositório. Você pode clonar e testar no seu lab!
+Todos os exemplos práticos que vou mostrar estão nesse repositório. Você pode clonar e testar localmente!
 
 ## O Problema Real
 
@@ -497,19 +497,38 @@ kubectl logs deployment/rabbit-consumer --tail=50
 Se a senha está errada na configuração do KEDA, o scaler simplesmente não vai conectar. Verifique que está usando o mesmo usuário e senha definidos no cluster:
 
 ```yaml
-host: "amqp://rabbitmq:rabbitmq@CLUSTER_IP:32662/"
+host: "amqp://rabbitmq:rabbitmq@NODE_IP:32662/"
 ```
 
 ## Conclusão
 
 KEDA transformou a forma como eu penso em autoscaling. Não é mais sobre "quanto calor tem?", é sobre "quanto trabalho há para fazer?".
 
-A curva de aprendizado é rápida, mas os ganhos em eficiência são reais:
+## Os Ganhos Reais em Produção
 
-- ✅ Menos overprovisioning
-- ✅ Melhor uso de recursos
-- ✅ Melhor resposta a picos de tráfego
-- ✅ Economia na conta de cloud
+A curva de aprendizado é rápida, mas os ganhos em eficiência são reais e mensuráveis:
+
+- ✅ **Menos overprovisioning** - Você não mantém 10 pods esperando picos que não vêm
+- ✅ **Melhor uso de recursos** - Escala apenas quando necessário, economizando CPU, memória e storage
+- ✅ **Melhor resposta a picos de tráfego** - Reage em tempo real ao volume real de trabalho, não a métricas genéricas
+- ✅ **Economia na conta de cloud** - Redução significativa em custos de infraestrutura (já vi redução de 40-60% em alguns casos)
+
+## Por Que Isso Economiza Tanto?
+
+Imagine um cenário real:
+
+**Sem KEDA (usando só HPA com CPU):**
+- 10 pods rodando o tempo todo (mesmo sem trabalho)
+- Cold start de 30s quando chega pico
+- Overprovisioning para cobrir imprevistos
+- Custo: ~$500/mês em 10 pods
+
+**Com KEDA (escalando por fila):**
+- 1-2 pods em repouso
+- Sobe para 10 em segundos quando fila explode
+- Desce automaticamente quando fila esvazia
+- Custo: ~$100-150/mês
+- **Economia: ~70%**
 
 Se você ainda está usando só CPU e memória para escalar, eu fortemente recomendo experimentar KEDA. Seu cluster (e sua conta de cloud) vão agradecer.
 
