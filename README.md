@@ -8,7 +8,7 @@ MIT
 
 ## 👤 Autor
 
-[Roberta Soliman](https://github.com/seu-usuario)
+[Roberta Soliman](https://github.com/robertasolimandonofreo)
 - Medium: [@robertasoliman](https://medium.com/@robertasoliman)
 - LinkedIn: [Roberta Soliman](https://linkedin.com/in/robertasoliman)
 
