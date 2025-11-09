@@ -1,0 +1,11 @@
+curl -i -u rabbitmq:rabbitmq -H "content-type: application/json" \
+-XPUT http://172.19.169.56:32062/api/queues/%2f/keda-queue \
+-d '{"auto_delete":false,"durable":true}'
+
+
+for i in {1..20}; do
+curl -i -u rabbitmq:rabbitmq \
+  -H "content-type: application/json" \
+  -XPOST http://172.19.169.56:32062/api/exchanges/%2f/amq.default/publish \
+  -d '{"properties":{},"routing_key":"keda-queue","payload":"msg","payload_encoding":"string"}'
+done
