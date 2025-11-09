@@ -6,3 +6,5 @@ kubectl patch svc keda-operator-metrics-apiserver -n keda \
   -p '{"spec": {"type": "NodePort"}}'
 kubectl get svc -n keda keda-operator-metrics-apiserver
 curl http://localhost:31906/metrics
+
+#Métricas Prometheus: http://172.19.169.56:31906/metrics
