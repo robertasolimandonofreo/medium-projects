@@ -1,0 +1,19 @@
+# keda-redis-scaler.yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-consumer-scaler
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: redis-consumer
+  pollingInterval: 10
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: redis
+    metadata:
+      address: "redis-master.redis.svc.cluster.local:6379"
+      listName: "keda-list"
+      listLength: "5"

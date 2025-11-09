@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-consumer
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-consumer
+  template:
+    metadata:
+      labels:
+        app: redis-consumer
+    spec:
+      containers:
+      - name: redis-consumer
+        image: busybox
+        command: ["sh", "-c", "echo 'Consumidor Redis ativo'; sleep 3600"]
