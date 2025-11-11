@@ -621,50 +621,8 @@ Quer testar uma nova ferramenta (mudança de Docker para Podman, por exemplo)? T
 
 ## Diagrama do Fluxo
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   Seu Repositório                           │
-│  (apenas 30 linhas de pipeline.yml)                        │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-                       │ Referencia
-                       ▼
-┌─────────────────────────────────────────────────────────────┐
-│        ci/pipeline (Repositório Central)                │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ kubernetes.yml (Template Principal)                 │  │
-│  │  ├─ Chama templates/sonar.yml     (SAST)           │  │
-│  │  ├─ Chama templates/cloudlogin    (AWS auth)       │  │
-│  │  ├─ Chama templates/docker.yml    (Build)          │  │
-│  │  └─ Chama templates/kubernetes.yml (Deploy)        │  │
-│  └──────────────────────────────────────────────────────┘  │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ cloudfront.yml (Template Principal)                │  │
-│  │  ├─ Chama templates/sonar.yml     (SAST)           │  │
-│  │  ├─ Chama templates/cloudlogin    (AWS auth)       │  │
-│  │  └─ Chama templates/cloudfront-deploy.yml (S3)     │  │
-│  └──────────────────────────────────────────────────────┘  │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ templates/ (Biblioteca de Steps)                    │  │
-│  │  ├─ sonar.yml                                       │  │
-│  │  ├─ cloudlogin.yml                                  │  │
-│  │  ├─ docker.yml                                      │  │
-│  │  ├─ kubernetes.yml                                  │  │
-│  │  ├─ cloudfront-deploy.yml                           │  │
-│  │  └─ clean.yml                                       │  │
-│  └──────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-                       ▲
-                       │ Executa
-                       │
-┌──────────────────────┴──────────────────────────────────────┐
-│              Azure DevOps Agent                             │
-│  (Docker, Go, Node.js, kubectl, AWS CLI, etc)            │
-└────────────────────────────────────────────────────────────┘
-```
+![Golang](https://github.com/robertasolimandonofreo/medium-projects/blob/main/azure-devops-templates/doc/pipelines-Go.drawio.png)
+![Nodejs](https://github.com/robertasolimandonofreo/medium-projects/blob/main/azure-devops-templates/doc/pipelines-Node.js.drawio.png)
 
 ---
 
@@ -919,3 +877,14 @@ Se você implementou templates e quer ir além:
 2. **Notificações:** Slack, Teams ou email em caso de falha
 3. **Dashboards:** Monitore sucesso/falha de pipelines (Devlake é uma boa opção, vou criar um artigo sobre isso)
 4. **Security scanning:** Adicione verificações de SAST mais rigorosas
+
+## Se você dominou Pipelines, o próximo nível é Releases no Azure DevOps. É aqui que a coisa fica séria:
+
+No próximo artigo vou mostrar:
+
+✅ Como estruturar Releases reutilizáveis (sim, templates aqui também!)
+✅ Estratégias de deployment (canary, blue-green, rolling)
+✅ Aprovações e gates de qualidade
+✅ Comparação: Pipelines vs Releases (quando usar cada um)
+✅ Exemplo prático: Deploy zero-downtime em produção
+✅ Rollback automático em caso de falha
