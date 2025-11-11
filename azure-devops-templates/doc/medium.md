@@ -878,13 +878,13 @@ Se você implementou templates e quer ir além:
 3. **Dashboards:** Monitore sucesso/falha de pipelines (Devlake é uma boa opção, vou criar um artigo sobre isso)
 4. **Security scanning:** Adicione verificações de SAST mais rigorosas
 
-## Se você dominou Pipelines, o próximo nível é Releases no Azure DevOps. É aqui que a coisa fica séria:
+### Se você dominou Pipelines, o próximo nível é Releases no Azure DevOps. É aqui que a coisa fica séria:
 
 No próximo artigo vou mostrar:
 
-✅ Como estruturar Releases reutilizáveis (sim, templates aqui também!)
-✅ Estratégias de deployment (canary, blue-green, rolling)
-✅ Aprovações e gates de qualidade
-✅ Comparação: Pipelines vs Releases (quando usar cada um)
-✅ Exemplo prático: Deploy zero-downtime em produção
-✅ Rollback automático em caso de falha
+- ✅ Como estruturar Releases reutilizáveis (sim, templates aqui também!)
+- ✅ Estratégias de deployment (canary, blue-green, rolling)
+- ✅ Aprovações e gates de qualidade
+- ✅ Comparação: Pipelines vs Releases (quando usar cada um)
+- ✅ Exemplo prático: Deploy zero-downtime em produção
+- ✅ Rollback automático em caso de falha
